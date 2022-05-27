@@ -19,16 +19,18 @@ import java.sql.Date;
 @Entity                 // specifies that the class is an entity and is mapped to a database table
 
 @Table
-public class Customer {
+public class Stock {
+
     @Id
     @GeneratedValue
     private int id;
-    @NotNull(message = "firstName may not be null")
-    @Column(columnDefinition = "TINYTEXT")
-    private String firstName;
-    @NotNull(message = "lastName may not be null")
-    @Column(columnDefinition = "TINYTEXT")
-    private String lastName;
-    @Column(columnDefinition = "DATE")
-    private Date bornAt;
+    @OneToOne
+    @JoinColumn(name = "productId",referencedColumnName = "id")
+    private  Product product;
+    @NotNull(message = "quantity may not be null")
+    @Column
+    private int quantity;
+    @NotNull(message = "updateAt may not be null")
+    @Column(columnDefinition = "DATETIME")
+    private Date updateAt;
 }
