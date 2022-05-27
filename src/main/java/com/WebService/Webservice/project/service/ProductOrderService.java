@@ -1,6 +1,7 @@
 package com.WebService.Webservice.project.service;
 
 import com.WebService.Webservice.project.dto.ProductOrderDto;
+import com.WebService.Webservice.project.entity.ProductOrderId;
 
 import java.util.List;
 
@@ -10,9 +11,9 @@ public interface ProductOrderService {
 
     List<ProductOrderDto> getAllProductOrders();
 
-    ProductOrderDto getProductOrderById(long id);
+    ProductOrderDto getProductOrderById(ProductOrderId id);
 
-    ProductOrderDto updateProductOrder(ProductOrderDto ProductOrderDto, long id);
+    ProductOrderDto updateProductOrder(ProductOrderDto ProductOrderDto, ProductOrderId id);
 
-    void deleteProductOrderById(long id);
+    void deleteProductOrderById(ProductOrderId id);
 }

@@ -10,9 +10,9 @@ public interface CustomerService {
 
     List<CustomerDto> getAllCustomers();
 
-    CustomerDto getCustomerById(long id);
+    CustomerDto getCustomerById(int id);
 
-    CustomerDto updateCustomer(CustomerDto CustomerDto, long id);
+    CustomerDto updateCustomer(CustomerDto CustomerDto, int id);
 
-    void deleteCustomerById(long id);
+    void deleteCustomerById(int id);
 }

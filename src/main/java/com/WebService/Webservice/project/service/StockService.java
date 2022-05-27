@@ -11,9 +11,9 @@ public interface StockService {
 
     List<StockDto> getAllStocks();
 
-    StockDto getStockById(long id);
+    StockDto getStockById(int id);
 
-    StockDto updateStock(StockDto StockDto, long id);
+    StockDto updateStock(StockDto StockDto, int id);
 
-    void deleteStockById(long id);
+    void deleteStockById(int id);
 }

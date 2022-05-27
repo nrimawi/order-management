@@ -10,9 +10,9 @@ public interface OrderService {
 
     List<OrderDto> getAllOrders();
 
-    OrderDto getOrderById(long id);
+    OrderDto getOrderById(int id);
 
-    OrderDto updateOrder(OrderDto OrderDto, long id);
+    OrderDto updateOrder(OrderDto OrderDto, int id);
 
-    void deleteOrder00ById(long id);
+    void deleteOrderById(int id);
 }
