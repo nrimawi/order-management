@@ -16,67 +16,101 @@ import java.util.stream.Collectors;
 public class OrderServiceImpl implements OrderService {
 
     private OrderRepository OrderRepository;
+
     public OrderServiceImpl(OrderRepository OrderRepository) {
         this.OrderRepository = OrderRepository;
     }
+
     @Override
     public OrderDto createOrder(OrderDto OrderDto) {
+        try {
+            // convert DTO to entity
+            Order Order = mapToEntity(OrderDto);
+            Order newOrder = OrderRepository.save(Order);
 
-        // convert DTO to entity
-        Order Order = mapToEntity(OrderDto);
-        Order newOrder = OrderRepository.save(Order);
-
-        // convert entity to DTO
-        OrderDto OrderResponse = mapToDTO(newOrder);
-        return OrderResponse;
+            // convert entity to DTO
+            OrderDto OrderResponse = mapToDTO(newOrder);
+            return OrderResponse;
+        } catch (Exception e) {
+            throw e;
+        }
     }
+
     @Override
     public List<OrderDto> getAllOrders() {
-        List<Order> categories = OrderRepository.findAll();
-        return categories.stream().map(Order -> mapToDTO(Order)).collect(Collectors.toList());
+        try {
+            List<Order> categories = OrderRepository.findAll();
+            return categories.stream().map(Order -> mapToDTO(Order)).collect(Collectors.toList());
+        } catch (Exception e) {
+            throw e;
+        }
     }
+
     @Override
     public OrderDto getOrderById(int id) {
-        Order Order = OrderRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Order", "id", id));
-        return mapToDTO(Order);
+        try {
+            Order Order = OrderRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Order", "id", id));
+            return mapToDTO(Order);
+        } catch (Exception e) {
+            throw e;
+        }
     }
+
     @Override
     public OrderDto updateOrder(OrderDto OrderDto, int id) {
-        // get Order by id from the database
-        Order Order = OrderRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Order", "id", id));
-        Order.setId(Order.getId());
-        Customer customer = new Customer();
-        customer.setId(OrderDto.getCustomerId());
-        Order.setCustomer(customer);
-        Order.setOrderedAt(OrderDto.getOrderedAt());
-        Order updatedOrder = OrderRepository.save(Order);
-        return mapToDTO(updatedOrder);
+        try {
+            // get Order by id from the database
+            Order Order = OrderRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Order", "id", id));
+            Order.setId(Order.getId());
+            Customer customer = new Customer();
+            customer.setId(OrderDto.getCustomerId());
+            Order.setCustomer(customer);
+            Order.setOrderedAt(OrderDto.getOrderedAt());
+            Order updatedOrder = OrderRepository.save(Order);
+            return mapToDTO(updatedOrder);
+        } catch (Exception e) {
+            throw e;
+        }
     }
+
     @Override
     public void deleteOrderById(int id) {
-        // get Order by id from the database
-        Order Order = OrderRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Order", "id", id));
-        OrderRepository.delete(Order);
+        try {
+            // get Order by id from the database
+            Order Order = OrderRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Order", "id", id));
+            OrderRepository.delete(Order);
+        } catch (Exception e) {
+            throw e;
+        }
     }
+
     // convert Entity into DTO
     private OrderDto mapToDTO(Order Order) {
+        try {
+            OrderDto OrderDto = new OrderDto();
+            OrderDto.setId(Order.getId());
+            OrderDto.setCustomerId(Order.getCustomer().getId());
+            Order.setOrderedAt(OrderDto.getOrderedAt());
 
-        OrderDto OrderDto = new OrderDto();
-        OrderDto.setId(Order.getId());
-        OrderDto.setCustomerId(Order.getCustomer().getId());
-        Order.setOrderedAt(OrderDto.getOrderedAt());
-
-        return OrderDto;
+            return OrderDto;
+        } catch (Exception e) {
+            throw e;
+        }
     }
 
     // convert DTO to entity
     private Order mapToEntity(OrderDto OrderDto) {
-        Order Order = new Order();
-        Order.setId(Order.getId());
-        Customer customer = new Customer();
-        customer.setId(OrderDto.getCustomerId());
-        Order.setCustomer(customer);
-        Order.setOrderedAt(OrderDto.getOrderedAt());
-        return Order;
+        try {
+            Order Order = new Order();
+            Order.setId(Order.getId());
+            Customer customer = new Customer();
+            customer.setId(OrderDto.getCustomerId());
+            Order.setCustomer(customer);
+            Order.setOrderedAt(OrderDto.getOrderedAt());
+            return Order;
+
+        } catch (Exception e) {
+            throw e;
+        }
     }
 }

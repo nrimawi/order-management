@@ -23,26 +23,42 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public CustomerDto createCustomer(CustomerDto CustomerDto) {
 
-        // convert DTO to entity
-        Customer Customer = mapToEntity(CustomerDto);
-        Customer newCustomer = CustomerRepository.save(Customer);
+        try {
+            // convert DTO to entity
+            Customer Customer = mapToEntity(CustomerDto);
+            Customer newCustomer = CustomerRepository.save(Customer);
 
-        // convert entity to DTO
-        CustomerDto CustomerResponse = mapToDTO(newCustomer);
-        return CustomerResponse;
+            // convert entity to DTO
+            CustomerDto CustomerResponse = mapToDTO(newCustomer);
+            return CustomerResponse;
+        }
+        catch(Exception e){
+            throw e;
+        }
     }
     @Override
     public List<CustomerDto> getAllCustomers() {
+        try {
         List<Customer> categories = CustomerRepository.findAll();
         return categories.stream().map(Customer -> mapToDTO(Customer)).collect(Collectors.toList());
+        }
+        catch(Exception e){
+            throw e;
+        }
     }
     @Override
     public CustomerDto getCustomerById(int id) {
+        try {
         Customer Customer = CustomerRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Customer", "id", id));
         return mapToDTO(Customer);
+        }
+        catch(Exception e){
+            throw e;
+        }
     }
     @Override
     public CustomerDto updateCustomer(CustomerDto CustomerDto, int id) {
+        try {
         // get Customer by id from the database
         Customer Customer = CustomerRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Customer", "id", id));
         Customer.setId(CustomerDto.getId());
@@ -51,16 +67,25 @@ public class CustomerServiceImpl implements CustomerService {
         Customer.setBornAt(Customer.getBornAt());
         Customer updatedCustomer = CustomerRepository.save(Customer);
         return mapToDTO(updatedCustomer);
+        }
+        catch(Exception e){
+            throw e;
+        }
     }
     @Override
     public void deleteCustomerById(int id) {
+        try {
         // get Customer by id from the database
         Customer Customer = CustomerRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Customer", "id", id));
         CustomerRepository.delete(Customer);
+        }
+        catch(Exception e){
+            throw e;
+        }
     }
     // convert Entity into DTO
     private CustomerDto mapToDTO(Customer Customer) {
-
+        try {
         CustomerDto customerDto = new CustomerDto();
         customerDto.setId(Customer.getId());
         customerDto.setId(Customer.getId());
@@ -69,14 +94,22 @@ public class CustomerServiceImpl implements CustomerService {
         customerDto.setBornAt(Customer.getBornAt());
 
         return customerDto;
+        }
+        catch(Exception e){
+            throw e;
+        }
     }
-
     // convert DTO to entity
     private Customer mapToEntity(CustomerDto CustomerDto) {
-        Customer Customer = new Customer();
-        Customer.setId(CustomerDto.getId());
-        Customer.setFirstName(CustomerDto.getFirstName());
-        Customer.setLastName(CustomerDto.getLastName());
-        return Customer;
+        try {
+            Customer Customer = new Customer();
+            Customer.setId(CustomerDto.getId());
+            Customer.setFirstName(CustomerDto.getFirstName());
+            Customer.setLastName(CustomerDto.getLastName());
+            return Customer;
+        } catch (Exception e) {
+            throw e;
+        }
     }
+
 }

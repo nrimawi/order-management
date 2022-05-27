@@ -22,66 +22,94 @@ public class ProductOrderServiceImpl implements ProductOrderService {
 
     @Override
     public ProductOrderDto createProductOrder(ProductOrderDto ProductOrderDto) {
+        try {
 
-        // convert DTO to entity
-        ProductOrder ProductOrder = mapToEntity(ProductOrderDto);
-        ProductOrder newProductOrder = ProductOrderRepository.save(ProductOrder);
 
-        // convert entity to DTO
-        ProductOrderDto ProductOrderResponse = mapToDTO(newProductOrder);
-        return ProductOrderResponse;
+            // convert DTO to entity
+            ProductOrder ProductOrder = mapToEntity(ProductOrderDto);
+            ProductOrder newProductOrder = ProductOrderRepository.save(ProductOrder);
+
+            // convert entity to DTO
+            ProductOrderDto ProductOrderResponse = mapToDTO(newProductOrder);
+            return ProductOrderResponse;
+        } catch (Exception e) {
+            throw e;
+        }
     }
 
     @Override
     public List<ProductOrderDto> getAllProductOrders() {
-        List<ProductOrder> categories = ProductOrderRepository.findAll();
-        return categories.stream().map(ProductOrder -> mapToDTO(ProductOrder)).collect(Collectors.toList());
+        try {
+            List<ProductOrder> categories = ProductOrderRepository.findAll();
+            return categories.stream().map(ProductOrder -> mapToDTO(ProductOrder)).collect(Collectors.toList());
+        } catch (Exception e) {
+            throw e;
+        }
     }
 
     @Override
     public ProductOrderDto getProductOrderById(ProductOrderId id) {
-        ProductOrder ProductOrder = ProductOrderRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("ProductOrder", "id", id));
-        return mapToDTO(ProductOrder);
+        try {
+            ProductOrder ProductOrder = ProductOrderRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("ProductOrder", "id", id));
+            return mapToDTO(ProductOrder);
+        } catch (Exception e) {
+            throw e;
+        }
     }
 
     @Override
     public ProductOrderDto updateProductOrder(ProductOrderDto ProductOrderDto, ProductOrderId id) {
-        // get ProductOrder by id from the database
-        ProductOrder ProductOrder = ProductOrderRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("ProductOrder", "id", id));
-        ProductOrder.setId(ProductOrderDto.getId());
-        ProductOrder.setQuantity(ProductOrderDto.getQuantity());
-        ProductOrder.setPrice(ProductOrderDto.getPrice());
-        ProductOrder.setVat(ProductOrderDto.getVat());
-        ProductOrder updatedProductOrder = ProductOrderRepository.save(ProductOrder);
-        return mapToDTO(updatedProductOrder);
+        try {
+            // get ProductOrder by id from the database
+            ProductOrder ProductOrder = ProductOrderRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("ProductOrder", "id", id));
+            ProductOrder.setId(ProductOrderDto.getId());
+            ProductOrder.setQuantity(ProductOrderDto.getQuantity());
+            ProductOrder.setPrice(ProductOrderDto.getPrice());
+            ProductOrder.setVat(ProductOrderDto.getVat());
+            ProductOrder updatedProductOrder = ProductOrderRepository.save(ProductOrder);
+            return mapToDTO(updatedProductOrder);
+        } catch (Exception e) {
+            throw e;
+        }
     }
 
     @Override
     public void deleteProductOrderById(ProductOrderId id) {
-        // get ProductOrder by id from the database
-        ProductOrder ProductOrder = ProductOrderRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("ProductOrder", "id", id));
-        ProductOrderRepository.delete(ProductOrder);
+        try {
+            // get ProductOrder by id from the database
+            ProductOrder ProductOrder = ProductOrderRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("ProductOrder", "id", id));
+            ProductOrderRepository.delete(ProductOrder);
+        } catch (Exception e) {
+            throw e;
+        }
     }
 
     // convert Entity into DTO
     private ProductOrderDto mapToDTO(ProductOrder ProductOrder) {
+        try {
+            ProductOrderDto ProductOrderDto = new ProductOrderDto();
+            ProductOrderDto.setId(ProductOrder.getId());
+            ProductOrderDto.setQuantity(ProductOrder.getQuantity());
+            ProductOrderDto.setPrice(ProductOrder.getPrice());
+            ProductOrderDto.setVat(ProductOrder.getVat());
 
-        ProductOrderDto ProductOrderDto = new ProductOrderDto();
-        ProductOrderDto.setId(ProductOrder.getId());
-        ProductOrderDto.setQuantity(ProductOrder.getQuantity());
-        ProductOrderDto.setPrice(ProductOrder.getPrice());
-        ProductOrderDto.setVat(ProductOrder.getVat());
-
-        return ProductOrderDto;
+            return ProductOrderDto;
+        } catch (Exception e) {
+            throw e;
+        }
     }
 
     // convert DTO to entity
     private ProductOrder mapToEntity(ProductOrderDto ProductOrderDto) {
-        ProductOrder ProductOrder = new ProductOrder();
-        ProductOrder.setId(ProductOrderDto.getId());
-        ProductOrder.setQuantity(ProductOrderDto.getQuantity());
-        ProductOrder.setPrice(ProductOrderDto.getPrice());
-        ProductOrder.setVat(ProductOrderDto.getVat());
-        return ProductOrder;
+        try {
+            ProductOrder ProductOrder = new ProductOrder();
+            ProductOrder.setId(ProductOrderDto.getId());
+            ProductOrder.setQuantity(ProductOrderDto.getQuantity());
+            ProductOrder.setPrice(ProductOrderDto.getPrice());
+            ProductOrder.setVat(ProductOrderDto.getVat());
+            return ProductOrder;
+        } catch (Exception e) {
+            throw e;
+        }
     }
 }

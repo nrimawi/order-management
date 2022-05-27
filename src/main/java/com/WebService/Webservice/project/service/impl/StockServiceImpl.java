@@ -23,66 +23,97 @@ public class StockServiceImpl implements StockService {
 
     @Override
     public StockDto createStock(StockDto StockDto) {
+        try {
+            // convert DTO to entity
+            Stock Stock = mapToEntity(StockDto);
+            Stock newStock = StockRepository.save(Stock);
 
-        // convert DTO to entity
-        Stock Stock = mapToEntity(StockDto);
-        Stock newStock = StockRepository.save(Stock);
-
-        // convert entity to DTO
-        StockDto StockResponse = mapToDTO(newStock);
-        return StockResponse;
+            // convert entity to DTO
+            StockDto StockResponse = mapToDTO(newStock);
+            return StockResponse;
+        } catch (Exception e) {
+            throw e;
+        }
     }
+
     @Override
     public List<StockDto> getAllStocks() {
-        List<Stock> categories = StockRepository.findAll();
-        return categories.stream().map(Stock -> mapToDTO(Stock)).collect(Collectors.toList());
+        try {
+            List<Stock> categories = StockRepository.findAll();
+            return categories.stream().map(Stock -> mapToDTO(Stock)).collect(Collectors.toList());
+        } catch (Exception e) {
+            throw e;
+        }
     }
+
     @Override
     public StockDto getStockById(int id) {
-        Stock Stock = StockRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Stock", "id", id));
-        return mapToDTO(Stock);
+        try {
+            Stock Stock = StockRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Stock", "id", id));
+            return mapToDTO(Stock);
+        } catch (Exception e) {
+            throw e;
+        }
     }
+
     @Override
     public StockDto updateStock(StockDto StockDto, int id) {
-        // get Stock by id from the database
-        Stock Stock = StockRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Stock", "id", id));
-        Stock.setId(Stock.getId());
-        Product product = new Product();
-        product.setId(StockDto.getProductId());
-        Stock.setProduct(product);
-        Stock.setQuantity(Stock.getQuantity());
-        Stock.setUpdateAt(Stock.getUpdateAt());
+        try {
+            // get Stock by id from the database
+            Stock Stock = StockRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Stock", "id", id));
+            Stock.setId(Stock.getId());
+            Product product = new Product();
+            product.setId(StockDto.getProductId());
+            Stock.setProduct(product);
+            Stock.setQuantity(Stock.getQuantity());
+            Stock.setUpdateAt(Stock.getUpdateAt());
 
-        Stock updatedStock = StockRepository.save(Stock);
-        return mapToDTO(updatedStock);
+            Stock updatedStock = StockRepository.save(Stock);
+            return mapToDTO(updatedStock);
+        } catch (Exception e) {
+            throw e;
+        }
     }
+
     @Override
     public void deleteStockById(int id) {
-        // get Stock by id from the database
-        Stock Stock = StockRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Stock", "id", id));
-        StockRepository.delete(Stock);
+        try {
+            // get Stock by id from the database
+            Stock Stock = StockRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Stock", "id", id));
+            StockRepository.delete(Stock);
+        } catch (Exception e) {
+            throw e;
+        }
     }
+
     // convert Entity into DTO
     private StockDto mapToDTO(Stock Stock) {
+        try {
+            StockDto StockDto = new StockDto();
+            StockDto.setId(Stock.getId());
+            StockDto.setProductId(Stock.getProduct().getId());
+            StockDto.setQuantity(Stock.getQuantity());
+            StockDto.setUpdateAt(Stock.getUpdateAt());
 
-        StockDto StockDto = new StockDto();
-        StockDto.setId(Stock.getId());
-        StockDto.setProductId(Stock.getProduct().getId());
-        StockDto.setQuantity(Stock.getQuantity());
-        StockDto.setUpdateAt(Stock.getUpdateAt());
-
-        return StockDto;
+            return StockDto;
+        } catch (Exception e) {
+            throw e;
+        }
     }
 
     // convert DTO to entity
     private Stock mapToEntity(StockDto StockDto) {
-        Stock Stock = new Stock();
-        Stock.setId(Stock.getId());
-        Product product = new Product();
-        product.setId(StockDto.getProductId());
-        Stock.setProduct(product);
-        Stock.setQuantity(Stock.getQuantity());
-        Stock.setUpdateAt(Stock.getUpdateAt());
-        return Stock;
+        try {
+            Stock Stock = new Stock();
+            Stock.setId(Stock.getId());
+            Product product = new Product();
+            product.setId(StockDto.getProductId());
+            Stock.setProduct(product);
+            Stock.setQuantity(Stock.getQuantity());
+            Stock.setUpdateAt(Stock.getUpdateAt());
+            return Stock;
+        } catch (Exception e) {
+            throw e;
+        }
     }
 }
