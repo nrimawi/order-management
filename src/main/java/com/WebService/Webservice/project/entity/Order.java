@@ -23,7 +23,7 @@ public class Order {
     @NotNull(message = "name may not be null")
     @Column
     private Date orderedAt;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "customerId",referencedColumnName = "id")
     private  Customer customer;
 }

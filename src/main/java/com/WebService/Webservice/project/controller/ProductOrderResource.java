@@ -38,7 +38,7 @@ public class ProductOrderResource {
         }
     }
 
-    @GetMapping
+    @GetMapping("id")
     public ResponseEntity getProductOrderById(@RequestParam int orderId, @RequestParam int productId) {
 
         try {
