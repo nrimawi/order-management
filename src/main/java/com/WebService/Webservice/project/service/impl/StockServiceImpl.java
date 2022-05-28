@@ -7,6 +7,7 @@ import com.WebService.Webservice.project.entity.Stock;
 import com.WebService.Webservice.project.exception.ResourceNotFoundException;
 import com.WebService.Webservice.project.repository.StockRepository;
 import com.WebService.Webservice.project.service.StockService;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,9 +17,10 @@ import java.util.stream.Collectors;
 public class StockServiceImpl implements StockService {
 
     private StockRepository StockRepository;
-
-    public StockServiceImpl(StockRepository StockRepository) {
+    private ModelMapper mapper;
+    public StockServiceImpl(StockRepository StockRepository,ModelMapper mapper) {
         this.StockRepository = StockRepository;
+        this.mapper= mapper;
     }
 
     @Override
@@ -89,11 +91,8 @@ public class StockServiceImpl implements StockService {
     // convert Entity into DTO
     private StockDto mapToDTO(Stock Stock) {
         try {
-            StockDto StockDto = new StockDto();
-            StockDto.setId(Stock.getId());
+            StockDto StockDto =mapper.map(Stock, StockDto.class);
             StockDto.setProductId(Stock.getProduct().getId());
-            StockDto.setQuantity(Stock.getQuantity());
-            StockDto.setUpdateAt(Stock.getUpdateAt());
 
             return StockDto;
         } catch (Exception e) {
@@ -104,13 +103,10 @@ public class StockServiceImpl implements StockService {
     // convert DTO to entity
     private Stock mapToEntity(StockDto StockDto) {
         try {
-            Stock Stock = new Stock();
-            Stock.setId(Stock.getId());
+            Stock Stock = mapper.map(StockDto, Stock.class);
             Product product = new Product();
             product.setId(StockDto.getProductId());
             Stock.setProduct(product);
-            Stock.setQuantity(Stock.getQuantity());
-            Stock.setUpdateAt(Stock.getUpdateAt());
             return Stock;
         } catch (Exception e) {
             throw e;

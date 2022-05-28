@@ -6,6 +6,7 @@ import com.WebService.Webservice.project.entity.Customer;
 import com.WebService.Webservice.project.exception.ResourceNotFoundException;
 import com.WebService.Webservice.project.repository.CustomerRepository;
 import com.WebService.Webservice.project.service.CustomerService;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,9 +16,11 @@ import java.util.stream.Collectors;
 public class CustomerServiceImpl implements CustomerService {
 
     private CustomerRepository CustomerRepository;
-
-    public CustomerServiceImpl(CustomerRepository CustomerRepository) {
+    private ModelMapper mapper;
+    public CustomerServiceImpl(CustomerRepository CustomerRepository, ModelMapper mapper) {
         this.CustomerRepository = CustomerRepository;
+        this.mapper = mapper;
+
     }
 
     @Override
@@ -86,13 +89,7 @@ public class CustomerServiceImpl implements CustomerService {
     // convert Entity into DTO
     private CustomerDto mapToDTO(Customer Customer) {
         try {
-        CustomerDto customerDto = new CustomerDto();
-        customerDto.setId(Customer.getId());
-        customerDto.setId(Customer.getId());
-        customerDto.setFirstName(Customer.getFirstName());
-        customerDto.setLastName(Customer.getLastName());
-        customerDto.setBornAt(Customer.getBornAt());
-
+        CustomerDto customerDto = mapper.map(Customer,CustomerDto.class);
         return customerDto;
         }
         catch(Exception e){
@@ -102,10 +99,7 @@ public class CustomerServiceImpl implements CustomerService {
     // convert DTO to entity
     private Customer mapToEntity(CustomerDto CustomerDto) {
         try {
-            Customer Customer = new Customer();
-            Customer.setId(CustomerDto.getId());
-            Customer.setFirstName(CustomerDto.getFirstName());
-            Customer.setLastName(CustomerDto.getLastName());
+            Customer Customer = mapper.map(CustomerDto,Customer.class);
             return Customer;
         } catch (Exception e) {
             throw e;

@@ -1,11 +1,13 @@
 package com.WebService.Webservice.project.service.impl;
 
 import com.WebService.Webservice.project.dto.ProductOrderDto;
+import com.WebService.Webservice.project.entity.Order;
 import com.WebService.Webservice.project.entity.ProductOrder;
 import com.WebService.Webservice.project.entity.ProductOrderId;
 import com.WebService.Webservice.project.exception.ResourceNotFoundException;
 import com.WebService.Webservice.project.repository.ProductOrderRepository;
 import com.WebService.Webservice.project.service.ProductOrderService;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,9 +17,10 @@ import java.util.stream.Collectors;
 public class ProductOrderServiceImpl implements ProductOrderService {
 
     private ProductOrderRepository ProductOrderRepository;
-
-    public ProductOrderServiceImpl(ProductOrderRepository ProductOrderRepository) {
+    private ModelMapper mapper;
+    public ProductOrderServiceImpl(ProductOrderRepository ProductOrderRepository, ModelMapper mapper) {
         this.ProductOrderRepository = ProductOrderRepository;
+        this.mapper=mapper;
     }
 
     @Override
@@ -87,11 +90,8 @@ public class ProductOrderServiceImpl implements ProductOrderService {
     // convert Entity into DTO
     private ProductOrderDto mapToDTO(ProductOrder ProductOrder) {
         try {
-            ProductOrderDto ProductOrderDto = new ProductOrderDto();
-            ProductOrderDto.setId(ProductOrder.getId());
-            ProductOrderDto.setQuantity(ProductOrder.getQuantity());
-            ProductOrderDto.setPrice(ProductOrder.getPrice());
-            ProductOrderDto.setVat(ProductOrder.getVat());
+
+            ProductOrderDto ProductOrderDto = mapper.map(ProductOrder, ProductOrderDto.class);
 
             return ProductOrderDto;
         } catch (Exception e) {
@@ -102,11 +102,8 @@ public class ProductOrderServiceImpl implements ProductOrderService {
     // convert DTO to entity
     private ProductOrder mapToEntity(ProductOrderDto ProductOrderDto) {
         try {
-            ProductOrder ProductOrder = new ProductOrder();
-            ProductOrder.setId(ProductOrderDto.getId());
-            ProductOrder.setQuantity(ProductOrderDto.getQuantity());
-            ProductOrder.setPrice(ProductOrderDto.getPrice());
-            ProductOrder.setVat(ProductOrderDto.getVat());
+            ProductOrder ProductOrder = mapper.map(ProductOrderDto, ProductOrder.class);
+
             return ProductOrder;
         } catch (Exception e) {
             throw e;

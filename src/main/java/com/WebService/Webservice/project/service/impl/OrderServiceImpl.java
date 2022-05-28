@@ -7,6 +7,7 @@ import com.WebService.Webservice.project.entity.Order;
 import com.WebService.Webservice.project.exception.ResourceNotFoundException;
 import com.WebService.Webservice.project.repository.OrderRepository;
 import com.WebService.Webservice.project.service.OrderService;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,9 +17,11 @@ import java.util.stream.Collectors;
 public class OrderServiceImpl implements OrderService {
 
     private OrderRepository OrderRepository;
-
-    public OrderServiceImpl(OrderRepository OrderRepository) {
+    private ModelMapper mapper;
+    public OrderServiceImpl(OrderRepository OrderRepository, ModelMapper mapper) {
         this.OrderRepository = OrderRepository;
+        this.mapper = mapper;
+
     }
 
     @Override
@@ -87,10 +90,8 @@ public class OrderServiceImpl implements OrderService {
     // convert Entity into DTO
     private OrderDto mapToDTO(Order Order) {
         try {
-            OrderDto OrderDto = new OrderDto();
-            OrderDto.setId(Order.getId());
+            OrderDto OrderDto = mapper.map(Order,OrderDto.class);
             OrderDto.setCustomerId(Order.getCustomer().getId());
-            Order.setOrderedAt(OrderDto.getOrderedAt());
 
             return OrderDto;
         } catch (Exception e) {
@@ -101,12 +102,10 @@ public class OrderServiceImpl implements OrderService {
     // convert DTO to entity
     private Order mapToEntity(OrderDto OrderDto) {
         try {
-            Order Order = new Order();
-            Order.setId(Order.getId());
+            Order Order = mapper.map(OrderDto,Order.class);
             Customer customer = new Customer();
             customer.setId(OrderDto.getCustomerId());
             Order.setCustomer(customer);
-            Order.setOrderedAt(OrderDto.getOrderedAt());
             return Order;
 
         } catch (Exception e) {

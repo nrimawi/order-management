@@ -6,6 +6,7 @@ import com.WebService.Webservice.project.entity.Product;
 import com.WebService.Webservice.project.exception.ResourceNotFoundException;
 import com.WebService.Webservice.project.repository.ProductRepository;
 import com.WebService.Webservice.project.service.ProductService;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,9 +16,12 @@ import java.util.stream.Collectors;
 public class ProductServiceImpl implements ProductService {
 
     private ProductRepository ProductRepository;
+    private ModelMapper mapper;
 
-    public ProductServiceImpl(ProductRepository ProductRepository) {
+
+    public ProductServiceImpl(ProductRepository ProductRepository, ModelMapper mapper) {
         this.ProductRepository = ProductRepository;
+        this.mapper=mapper;
     }
 
     @Override
@@ -89,14 +93,8 @@ public class ProductServiceImpl implements ProductService {
     // convert Entity into DTO
     private ProductDto mapToDTO(Product Product) {
         try {
-            ProductDto ProductDto = new ProductDto();
-            ProductDto.setId(Product.getId());
-            ProductDto.setName(Product.getName());
-            ProductDto.setPrice(Product.getPrice());
-            ProductDto.setStockable(Product.isStockable());
-            ProductDto.setVat(Product.getVat());
-            ProductDto.setSlug(Product.getSlug());
-            ProductDto.setReference(Product.getReference());
+            ProductDto ProductDto = mapper.map(Product, ProductDto.class);
+
 
             return ProductDto;
         } catch (Exception e) {
@@ -107,14 +105,8 @@ public class ProductServiceImpl implements ProductService {
     // convert DTO to entity
     private Product mapToEntity(ProductDto ProductDto) {
         try {
-            Product Product = new Product();
-            Product.setId(ProductDto.getId());
-            Product.setName(ProductDto.getName());
-            Product.setPrice(ProductDto.getPrice());
-            Product.setStockable(ProductDto.isStockable());
-            Product.setVat(ProductDto.getVat());
-            Product.setSlug(ProductDto.getSlug());
-            Product.setReference(ProductDto.getReference());
+            Product Product = mapper.map(ProductDto, Product.class);
+
 
             return Product;
         } catch (Exception e) {
