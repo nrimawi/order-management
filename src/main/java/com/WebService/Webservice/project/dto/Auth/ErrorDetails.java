@@ -1,4 +1,4 @@
-package com.WebService.Webservice.project.dto;
+package com.WebService.Webservice.project.dto.Auth;
 
 import java.util.Date;
 

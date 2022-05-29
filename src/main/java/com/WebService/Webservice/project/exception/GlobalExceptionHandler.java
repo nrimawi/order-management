@@ -1,6 +1,6 @@
 package com.WebService.Webservice.project.exception;
 
-import com.WebService.Webservice.project.dto.ErrorDetails;
+import com.WebService.Webservice.project.dto.Auth.ErrorDetails;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

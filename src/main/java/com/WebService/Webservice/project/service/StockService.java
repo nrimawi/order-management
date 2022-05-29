@@ -1,7 +1,6 @@
 package com.WebService.Webservice.project.service;
 
 import com.WebService.Webservice.project.dto.StockDto;
-import com.WebService.Webservice.project.dto.StockDto;
 
 import java.util.List;
 
