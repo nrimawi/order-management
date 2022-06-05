@@ -16,6 +16,8 @@ public class JwtTokenProvider {
     @Value("${app.jwt-secret}")
     private String jwtSecret;
 
+
+
     /*In order to get the value of the JWT expiration from the application.properties file*/
     @Value("${app.jwt-expiration-milliseconds}")
     private int jwtExpirationInMs;
