@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
-
+//This class is for Data transferring for stocks object
 @Data
 public class StockDto {
     private int id;

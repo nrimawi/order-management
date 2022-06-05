@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+
+//This class is for Data transferring for Product object
 @Data
 public class ProductDto {
     private int id;

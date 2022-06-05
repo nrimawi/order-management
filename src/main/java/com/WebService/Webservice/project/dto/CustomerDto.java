@@ -4,6 +4,7 @@ import lombok.Data;
 
 import java.util.Date;
 
+//This class is for Data transferring for Customer object
 @Data
 public class CustomerDto {
     private int id;

@@ -3,7 +3,6 @@ package com.WebService.Webservice.project.service.impl;
 
 import com.WebService.Webservice.project.dto.OrderDto;
 import com.WebService.Webservice.project.dto.ProductDto;
-import com.WebService.Webservice.project.dto.ProductOrderDto;
 import com.WebService.Webservice.project.dto.StockDto;
 import com.WebService.Webservice.project.entity.*;
 import com.WebService.Webservice.project.exception.ResourceNotFoundException;
@@ -15,7 +14,6 @@ import com.WebService.Webservice.project.service.StockService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import javax.xml.crypto.Data;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
