@@ -20,14 +20,18 @@ public class StockServiceImpl implements StockService {
     private StockRepository StockRepository;
     private ProductService ProductService;
     private ModelMapper mapper;
-    public StockServiceImpl(StockRepository StockRepository,ModelMapper mapper) {
+    public StockServiceImpl(StockRepository StockRepository,ModelMapper mapper,ProductService productService) {
         this.StockRepository = StockRepository;
         this.mapper= mapper;
+        this.ProductService=productService;
     }
 
     @Override
-    public StockDto createStock(StockDto StockDto) {
+    public StockDto createStock(StockDto StockDto) throws Exception {
         try {
+
+            if(!ProductService.getProductById(StockDto.getId()).isStockable())
+                throw  new Exception("Can not Add product to the stock");
             // convert DTO to entity
             Stock Stock = mapToEntity(StockDto);
             Stock newStock = StockRepository.save(Stock);

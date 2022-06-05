@@ -8,7 +8,7 @@ import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.sql.Date;
+import java.util.Date;
 
 @Data
 //Generates getters for all fields, a useful toString method, and hashCode and equals implementations that check all non-transient fields

@@ -1,0 +1,180 @@
+{
+	"info": {
+		"_postman_id": "2d16fb79-f2ec-4e07-a94f-1099da1662ab",
+		"name": "Customer",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "20593998"
+	},
+	"item": [
+		{
+			"name": "CreateCustomer",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"bornAt\": \"2022-04-04\",\r\n  \"firstName\": \"Nazeeh\",\r\n  \"lastName\": \"Rimawi\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:9091/api/v1/customer"
+			},
+			"response": [
+				{
+					"name": "CreateCustomer",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"bornAt\": \"2022-04-04\",\r\n  \"firstName\": \"Nazeeh\",\r\n  \"lastName\": \"Rimawi\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:9091/api/v1/customer"
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Update Customer",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:9091/api/v1/customer"
+			},
+			"response": [
+				{
+					"name": "Update Customer",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"bornAt\": \"1999-05-10\",\r\n  \"firstName\": \"Nazeeh\",\r\n  \"lastName\": \"Rimawi\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:9091/api/v1/customer/2"
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "GetAllCustomers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:9091/api/v1/customer"
+			},
+			"response": [
+				{
+					"name": "GetAllCustomers",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:9091/api/v1/customer"
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "DeleteCustomerById",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": "http://localhost:9091/api/v1/customer/"
+			},
+			"response": [
+				{
+					"name": "DeleteCustomerById",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": "http://localhost:9091/api/v1/customer/"
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "GetCustomerById",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:9091/api/v1/customer/"
+			},
+			"response": [
+				{
+					"name": "GetCustomerById",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:9091/api/v1/customer/2"
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": {
+			"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJuYXplZWhfckB5YWhvby5jb20iLCJpYXQiOjE2NTQ0NTY4MTgsImV4cCI6MTY1NTA2MTYxOH0.geM5VZ8nKZdeeMd_Cxn1W0TehUQwxfW3tM3UMbobaqmzPwJ_v39Ee-Lckv6a5X9aHrNAw5tB6NajkpJ4QRCJpQ"
+		}
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

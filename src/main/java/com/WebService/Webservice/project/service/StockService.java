@@ -6,7 +6,7 @@ import java.util.List;
 
 
 public interface StockService {
-    StockDto createStock(StockDto StockDto);
+    StockDto createStock(StockDto StockDto) throws Exception;
 
     List<StockDto> getAllStocks();
 

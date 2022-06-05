@@ -9,6 +9,7 @@ import com.WebService.Webservice.project.service.CustomerService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -64,10 +65,9 @@ public class CustomerServiceImpl implements CustomerService {
         try {
         // get Customer by id from the database
         Customer Customer = CustomerRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Customer", "id", id));
-        Customer.setId(CustomerDto.getId());
         Customer.setFirstName(CustomerDto.getFirstName());
-        Customer.setLastName(Customer.getLastName());
-        Customer.setBornAt(Customer.getBornAt());
+        Customer.setLastName(CustomerDto.getLastName());
+        Customer.setBornAt( CustomerDto.getBornAt());
         Customer updatedCustomer = CustomerRepository.save(Customer);
         return mapToDTO(updatedCustomer);
         }
