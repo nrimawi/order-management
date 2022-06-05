@@ -6,7 +6,7 @@ import java.util.List;
 
 
 public interface OrderService {
-    OrderDto createOrder(OrderDto OrderDto);
+    OrderDto createOrder(int productId,int customerId,int Quantity) throws Exception;
 
     List<OrderDto> getAllOrders();
 

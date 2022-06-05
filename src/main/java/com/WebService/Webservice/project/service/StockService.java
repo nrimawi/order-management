@@ -15,4 +15,6 @@ public interface StockService {
     StockDto updateStock(StockDto StockDto, int id);
 
     void deleteStockById(int id);
+
+    StockDto getStockByProductId(int productId);
 }

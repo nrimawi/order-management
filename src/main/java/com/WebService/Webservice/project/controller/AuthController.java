@@ -45,7 +45,7 @@ public class AuthController {
     @Autowired
     private JwtTokenProvider tokenProvider;
 
-    @ApiOperation(value = "REST API to  sign-in user to Blog app")
+    @ApiOperation(value = "REST API to sign-in user to Blog app for both user and admin")
     @PostMapping("/sign-in")
     public ResponseEntity<JWTAuthResponse> authenticateUser(@RequestBody LoginDto loginDto){
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
@@ -58,9 +58,9 @@ public class AuthController {
         return ResponseEntity.ok(new JWTAuthResponse(token));
     }
 
-    @ApiOperation(value = "REST API to sign-up to Blog app")
-    @PostMapping("/sign-up")
-    public ResponseEntity<?> registerUser(@RequestBody SignUpDto signUpDto){
+    @ApiOperation(value = "REST API to sign-up as user to Blog app")
+    @PostMapping("/sign-up/admin")
+    public ResponseEntity<?> registerAdmin(@RequestBody SignUpDto signUpDto){
 
         // add check for username exists in a DB
         if(userRepository.existsByUsername(signUpDto.getUsername())){
@@ -80,6 +80,37 @@ public class AuthController {
         user.setPassword(passwordEncoder.encode(signUpDto.getPassword()));
 
         Role roles = roleRepository.findByName("ROLE_ADMIN").get();
+        user.setRoles(Collections.singleton(roles));
+
+        userRepository.save(user);
+
+        return new ResponseEntity<>("Admin registered successfully", HttpStatus.OK);
+
+    }
+
+
+    @ApiOperation(value = "REST API to sign-up as admin to Blog app")
+    @PostMapping("/sign-up/user")
+    public ResponseEntity<?> registerUser(@RequestBody SignUpDto signUpDto){
+
+        // add check for username exists in a DB
+        if(userRepository.existsByUsername(signUpDto.getUsername())){
+            return new ResponseEntity<>("Username is already taken!", HttpStatus.BAD_REQUEST);
+        }
+
+        // add check for email exists in DB
+        if(userRepository.existsByEmail(signUpDto.getEmail())){
+            return new ResponseEntity<>("Email is already taken!", HttpStatus.BAD_REQUEST);
+        }
+
+        // create user object
+        User user = new User();
+        user.setName(signUpDto.getName());
+        user.setUsername(signUpDto.getUsername());
+        user.setEmail(signUpDto.getEmail());
+        user.setPassword(passwordEncoder.encode(signUpDto.getPassword()));
+
+        Role roles = roleRepository.findByName("ROLE_USER").get();
         user.setRoles(Collections.singleton(roles));
 
         userRepository.save(user);

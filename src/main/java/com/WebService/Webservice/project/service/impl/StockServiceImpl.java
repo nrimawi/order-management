@@ -6,6 +6,7 @@ import com.WebService.Webservice.project.entity.Product;
 import com.WebService.Webservice.project.entity.Stock;
 import com.WebService.Webservice.project.exception.ResourceNotFoundException;
 import com.WebService.Webservice.project.repository.StockRepository;
+import com.WebService.Webservice.project.service.ProductService;
 import com.WebService.Webservice.project.service.StockService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 public class StockServiceImpl implements StockService {
 
     private StockRepository StockRepository;
+    private ProductService ProductService;
     private ModelMapper mapper;
     public StockServiceImpl(StockRepository StockRepository,ModelMapper mapper) {
         this.StockRepository = StockRepository;
@@ -67,8 +69,8 @@ public class StockServiceImpl implements StockService {
             Product product = new Product();
             product.setId(StockDto.getProductId());
             Stock.setProduct(product);
-            Stock.setQuantity(Stock.getQuantity());
-            Stock.setUpdateAt(Stock.getUpdateAt());
+            Stock.setQuantity(StockDto.getQuantity());
+            Stock.setUpdateAt(StockDto.getUpdateAt());
 
             Stock updatedStock = StockRepository.save(Stock);
             return mapToDTO(updatedStock);
@@ -88,10 +90,20 @@ public class StockServiceImpl implements StockService {
         }
     }
 
+    public StockDto getStockByProductId(int productId) {
+
+        List<Stock> stocks = StockRepository.findAll();
+        for (int i=0;i<stocks.size();i++){
+            if (stocks.get(i).getProduct().getId() == productId)
+                return mapper.map(stocks.get(i), StockDto.class);
+        }
+        return null;
+    }
+
     // convert Entity into DTO
     private StockDto mapToDTO(Stock Stock) {
         try {
-            StockDto StockDto =mapper.map(Stock, StockDto.class);
+            StockDto StockDto = mapper.map(Stock, StockDto.class);
             StockDto.setProductId(Stock.getProduct().getId());
 
             return StockDto;
@@ -99,6 +111,8 @@ public class StockServiceImpl implements StockService {
             throw e;
         }
     }
+
+
 
     // convert DTO to entity
     private Stock mapToEntity(StockDto StockDto) {

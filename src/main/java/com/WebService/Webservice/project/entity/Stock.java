@@ -8,7 +8,7 @@ import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.sql.Date;
+import java.util.Date;
 
 @Data
 //Generates getters for all fields, a useful toString method, and hashCode and equals implementations that check all non-transient fields
@@ -24,13 +24,13 @@ public class Stock {
     @Id
     @GeneratedValue
     private int id;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "productId",referencedColumnName = "id")
     private  Product product;
     @NotNull(message = "quantity may not be null")
     @Column
     private int quantity;
     @NotNull(message = "updateAt may not be null")
-    @Column(columnDefinition = "DATETIME")
+    @Column
     private Date updateAt;
 }
