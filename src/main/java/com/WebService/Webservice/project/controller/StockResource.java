@@ -17,7 +17,7 @@ import javax.validation.Valid;
 
 @Api(value = "CRUD REST APIs for Stock resource")
 @RestController
-@RequestMapping("/api/v1/Stock")
+@RequestMapping("/api/v1/stock")
 public class StockResource {
     private final Logger log = LoggerFactory.getLogger(StockResource.class);
     private StockService StockService; //the use of interface rather than class is important for loose coupling

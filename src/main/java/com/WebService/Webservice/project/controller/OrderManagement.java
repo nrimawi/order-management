@@ -13,11 +13,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-
 @Api(value = "CRUD REST APIs for Order resource")
 @RestController
-@RequestMapping("/api/v1/Order")
+@RequestMapping("/api/v1/order")
 public class OrderManagement {
     private final Logger log = LoggerFactory.getLogger(OrderManagement.class);
     private OrderService OrderService; //the use of interface rather than class is important for loose coupling
@@ -79,53 +77,39 @@ public class OrderManagement {
             @RequestParam(value = "CustomerId", required = true) int customerId,
             @RequestParam(value = "ProductId", required = true) int productId,
             @RequestParam(value = "Quantity", required = true) int quantity
-            ) {
+    ) {
         try {
             log.info("Creating Order");
-            return new ResponseEntity<>(OrderService.createOrder(customerId,productId,quantity), HttpStatus.CREATED);
+            return new ResponseEntity<>(OrderService.createOrder(customerId, productId, quantity), HttpStatus.CREATED);
         } catch (Exception ex) {
             log.error(ex.getMessage());
             return ResponseEntity.badRequest().body(ex.getMessage());
         }
     }
 
-    @ApiOperation(value = "Update Order REST API")
+
+    @ApiOperation(value = "Cancel Order and update the stock")
     @ApiResponses(value = {
             @ApiResponse(code = 500, message = "Internal Server error!"),
             @ApiResponse(code = 404, message = "Service not found"),
             @ApiResponse(code = 400, message = "Bad request"),
             @ApiResponse(code = 200, message = "Successful",
                     response = OrderDto.class, responseContainer = "Response")})
-    @PutMapping("/{id}")
-    public ResponseEntity updateOrder(@Valid @RequestBody OrderDto OrderDto
-            , @PathVariable(name = "id") int id) {
+    @PostMapping("/cancel")
+    public ResponseEntity cancelOrderById(@RequestParam(value = "OrderId", required = true) int orderId) {
+
         try {
-            log.info("Updating Order ");
-            return new ResponseEntity<>(OrderService.updateOrder(OrderDto, id), HttpStatus.OK);
+            log.info("Canceling Order ");
+            if (OrderService.cancelOrderById(orderId))
+                return new ResponseEntity<>("Canceling order and updating stock has been done successfully", HttpStatus.OK);
+            else
+
+                return new ResponseEntity<>("Canceling order failed", HttpStatus.BAD_REQUEST);
+
+
         } catch (Exception ex) {
             log.error(ex.getMessage());
 
-            return ResponseEntity.badRequest().body(ex.getMessage());
-        }
-    }
-
-    @ApiOperation(value = "Delete Order REST API")
-    @ApiResponses(value = {
-            @ApiResponse(code = 500, message = "Internal Server error!"),
-            @ApiResponse(code = 404, message = "Service not found"),
-            @ApiResponse(code = 400, message = "Bad request"),
-            @ApiResponse(code = 200, message = "Successful",
-                    response = OrderDto.class, responseContainer = "Response")})
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteOrder(@PathVariable(name = "id") int id) {
-
-        try {
-            log.info("Deleting Order");
-            OrderService.deleteOrderById(id);
-//        return ResponseEntity.ok().headers(<add warnings....>).build();
-            return new ResponseEntity<>("Deleted successfully.", HttpStatus.OK);
-        } catch (Exception ex) {
-            log.error(ex.getMessage());
             return ResponseEntity.badRequest().body(ex.getMessage());
         }
     }

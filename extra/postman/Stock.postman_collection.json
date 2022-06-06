@@ -1,0 +1,189 @@
+{
+	"info": {
+		"_postman_id": "6402e712-2f9b-4994-b2c5-592c31e6b4ca",
+		"name": "Stock",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "20593998"
+	},
+	"item": [
+		{
+			"name": "CreateStock",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"productId\": 6,\r\n  \"quantity\": 5,\r\n  \"updateAt\": \"2022-07-05\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:9091/api/v1/stock"
+			},
+			"response": [
+				{
+					"name": "CreateStock",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"productId\": 6,\r\n  \"quantity\": 5,\r\n  \"updateAt\": \"2022-07-05\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:9091/api/v1/stock"
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "UpdateStock",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"productId\": 6,\r\n  \"quantity\": 25\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:9091/api/v1/stock/5"
+			},
+			"response": [
+				{
+					"name": "UpdateStock",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"productId\": 6,\r\n  \"quantity\": 5,\r\n  \"updateAt\": \"2022-07-05\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:9091/api/v1/stock/5"
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "GetAllStocks",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:9091/api/v1/stock"
+			},
+			"response": [
+				{
+					"name": "GetAllStocks",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:9091/api/v1/stock"
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "DeleteStockById",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": "http://localhost:9091/api/v1/stock/7"
+			},
+			"response": [
+				{
+					"name": "DeleteStockById",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": "http://localhost:9091/api/v1/stock/7"
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "GetStockById",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:9091/api/v1/stock/5"
+			},
+			"response": [
+				{
+					"name": "GetStockById",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:9091/api/v1/stock/5"
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": {
+			"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJuYXplZWhfckB5YWhvby5jb20iLCJpYXQiOjE2NTQ0NjgxOTksImV4cCI6MTY1NTA3Mjk5OX0.zAcB14kRmUFLhuQR8pEKw-7A5wIQHmZwmFjNX6fEgyYHi6PMQagw9u2ss1x-1LOc5yiCV0f8Mkx7FWrQzdt7Dw"
+		}
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

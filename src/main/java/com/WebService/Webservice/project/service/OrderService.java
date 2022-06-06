@@ -1,18 +1,17 @@
 package com.WebService.Webservice.project.service;
 
-import com.WebService.Webservice.project.dto.OrderDto;
+import com.WebService.Webservice.project.dto.OrderResponse;
 
 import java.util.List;
 
 
 public interface OrderService {
-    OrderDto createOrder(int productId,int customerId,int Quantity) throws Exception;
+    OrderResponse createOrder(int productId, int customerId, int Quantity) throws Exception;
 
-    List<OrderDto> getAllOrders();
+    List<OrderResponse> getAllOrders();
 
-    OrderDto getOrderById(int id);
+    OrderResponse getOrderById(int id);
 
-    OrderDto updateOrder(OrderDto OrderDto, int id);
+    public  boolean cancelOrderById(int id);
 
-    void deleteOrderById(int id);
-}
+    }

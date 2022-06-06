@@ -64,7 +64,6 @@ public class ProductServiceImpl implements ProductService {
         try {
             // get Product by id from the database
             Product Product = ProductRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Product", "id", id));
-            Product.setId(ProductDto.getId());
             Product.setSlug(ProductDto.getSlug());
             Product.setName(ProductDto.getName());
             Product.setReference(ProductDto.getReference());

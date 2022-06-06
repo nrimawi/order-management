@@ -1,0 +1,64 @@
+{
+	"info": {
+		"_postman_id": "efe50eaa-1f3b-4a34-92b0-2bee15c0ae51",
+		"name": "Authentication",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "20593998"
+	},
+	"item": [
+		{
+			"name": "SignUp/admin",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"nazeeh_r@yahoo.com\",\r\n  \"name\": \"Nazeeh Rimawi\",\r\n  \"password\": \"nazeeh\",\r\n  \"username\": \"nazeeh\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:9091/api/v1/auth/sign-up/admin"
+			},
+			"response": []
+		},
+		{
+			"name": "SignUp/user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"ali@yahoo.com\",\r\n  \"name\": \"Ali Ahmad\",\r\n  \"password\": \"ali123\",\r\n  \"username\": \"ali\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:9091/api/v1/auth/sign-up/user"
+			},
+			"response": []
+		},
+		{
+			"name": "SignIn/user_admin",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"password\": \"nazeeh\",\r\n  \"usernameOrEmail\": \"nazeeh\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:9091/api/v1/auth/sign-in"
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,189 @@
+{
+	"info": {
+		"_postman_id": "ce39583c-09e1-48e6-b489-373fdb4644b2",
+		"name": "Prodcut",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "20593998"
+	},
+	"item": [
+		{
+			"name": "CreateProduct",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"IPhone 12 pro max\",\r\n  \"price\": 4000,\r\n  \"reference\": \"Sbitany\",\r\n  \"slug\": \"SmartPhone\",\r\n  \"stockable\": true,\r\n  \"vat\": 15\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:9091/api/v1/product"
+			},
+			"response": [
+				{
+					"name": "CreateProduct",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"IPhone 13 pro max\",\r\n  \"price\": 4500,\r\n  \"reference\": \"Sbitany\",\r\n  \"slug\": \"SmartPhone\",\r\n  \"stockable\": true,\r\n  \"vat\": 15\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:9091/api/v1/product"
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "UpdateProduct",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"IPhone 12 pro max-updated\",\r\n  \"price\": 4000,\r\n  \"reference\": \"Sbitany\",\r\n  \"slug\": \"SmartPhone\",\r\n  \"stockable\": true,\r\n  \"vat\": 15\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:9091/api/v1/product/5"
+			},
+			"response": [
+				{
+					"name": "UpdateProduct",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"IPhone 12 pro max-updated\",\r\n  \"price\": 3500,\r\n  \"reference\": \"Sbitany\",\r\n  \"slug\": \"SmartPhone\",\r\n  \"stockable\": true,\r\n  \"vat\": 15\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:9091/api/v1/customer"
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "GetAllProducts",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:9091/api/v1/product"
+			},
+			"response": [
+				{
+					"name": "GetAllProducts",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:9091/api/v1/customer"
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "DeleteProductById",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": "http://localhost:9091/api/v1/product/7"
+			},
+			"response": [
+				{
+					"name": "DeleteProductById",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": "http://localhost:9091/api/v1/customer/7"
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "GetProductById",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:9091/api/v1/product/5"
+			},
+			"response": [
+				{
+					"name": "GetProductById",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:9091/api/v1/product/5"
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": {
+			"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJuYXplZWhfckB5YWhvby5jb20iLCJpYXQiOjE2NTQ0NjgxOTksImV4cCI6MTY1NTA3Mjk5OX0.zAcB14kRmUFLhuQR8pEKw-7A5wIQHmZwmFjNX6fEgyYHi6PMQagw9u2ss1x-1LOc5yiCV0f8Mkx7FWrQzdt7Dw"
+		}
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

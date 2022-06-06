@@ -1,10 +1,13 @@
 package com.WebService.Webservice.project.service.impl;
 
 
-import com.WebService.Webservice.project.dto.OrderDto;
+import com.WebService.Webservice.project.dto.OrderResponse;
 import com.WebService.Webservice.project.dto.ProductDto;
 import com.WebService.Webservice.project.dto.StockDto;
-import com.WebService.Webservice.project.entity.*;
+import com.WebService.Webservice.project.entity.Customer;
+import com.WebService.Webservice.project.entity.Order;
+import com.WebService.Webservice.project.entity.Product;
+import com.WebService.Webservice.project.entity.ProductOrder;
 import com.WebService.Webservice.project.exception.ResourceNotFoundException;
 import com.WebService.Webservice.project.repository.OrderRepository;
 import com.WebService.Webservice.project.repository.ProductOrderRepository;
@@ -14,21 +17,21 @@ import com.WebService.Webservice.project.service.StockService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service //To enable this class for component scanning
 public class OrderServiceImpl implements OrderService {
 
-    private OrderRepository OrderRepository;
+    private OrderRepository _orderRepository;
     private ProductOrderRepository _productOrderRepository;
     private ProductService _productService;
     private StockService _stockService;
     private ModelMapper mapper;
 
     public OrderServiceImpl(OrderRepository OrderRepository, ModelMapper mapper, ProductOrderRepository productOrderRepository, ProductService productService, StockService stockService) {
-        this.OrderRepository = OrderRepository;
+        this._orderRepository = OrderRepository;
         this.mapper = mapper;
         this._productOrderRepository = productOrderRepository;
         this._productService = productService;
@@ -36,7 +39,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderDto createOrder(int customerId, int productId, int quantity) throws Exception {
+    public OrderResponse createOrder(int customerId, int productId, int quantity) throws Exception {
         try {
 
             StockDto stockDto = _stockService.getStockByProductId(productId);
@@ -50,12 +53,12 @@ public class OrderServiceImpl implements OrderService {
             Customer customer = new Customer();
             customer.setId(customerId);
             order.setCustomer(customer);
-            Order newOrder = OrderRepository.save(order);
+            Order newOrder = _orderRepository.save(order);
 
             //create new product_order
             ProductDto productDto = _productService.getProductById(productId);
 
-            ProductOrder productOrder = new ProductOrder(mapper.map(newOrder,Order.class),mapper.map(productDto, Product.class));
+            ProductOrder productOrder = new ProductOrder(mapper.map(newOrder, Order.class), mapper.map(productDto, Product.class));
             productOrder.setPrice(productDto.getPrice());
             productOrder.setVat(productDto.getVat());
             productOrder.setQuantity(quantity);
@@ -67,8 +70,16 @@ public class OrderServiceImpl implements OrderService {
             stockDto.setUpdateAt(new Date());
             _stockService.updateStock(stockDto, stockDto.getId());
 
-            OrderDto OrderResponse = mapToDTO(newOrder);
-            return OrderResponse;
+            //Build the response
+            OrderResponse orderResponse = new OrderResponse();
+            orderResponse.setOrderId(newOrder.getId());
+            orderResponse.setOrderedAt(newOrder.getOrderedAt());
+            orderResponse.setProductId(productId);
+            orderResponse.setCustomer(customerId);
+            orderResponse.setQuantity(quantity);
+            orderResponse.setVat(productDto.getVat());
+            orderResponse.setProduct_price(productDto.getPrice());
+            return orderResponse;
 
         } catch (Exception e) {
             throw e;
@@ -76,76 +87,80 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderDto> getAllOrders() {
+    public List<OrderResponse> getAllOrders() {
+        List<OrderResponse> orderResponses = new ArrayList<>();
         try {
-            List<Order> categories = OrderRepository.findAll();
-            return categories.stream().map(Order -> mapToDTO(Order)).collect(Collectors.toList());
+            List<ProductOrder> productOrders = _productOrderRepository.findAll();
+            for (int i = 0; i < productOrders.size(); i++) {
+                int orderId = productOrders.get(i).getId().getOrder().getId();
+                Order order = _orderRepository.findById(orderId).orElseThrow(() -> new ResourceNotFoundException("Order", "id", orderId));
+
+                OrderResponse orderResponse = new OrderResponse();
+                orderResponse.setOrderId(order.getId());
+                orderResponse.setOrderedAt(order.getOrderedAt());
+                orderResponse.setProductId(productOrders.get(i).getId().getProduct().getId());
+                orderResponse.setCustomer(order.getCustomer().getId());
+                orderResponse.setQuantity(productOrders.get(i).getQuantity());
+                orderResponse.setVat(productOrders.get(i).getVat());
+                orderResponse.setProduct_price(productOrders.get(i).getPrice());
+                orderResponses.add(orderResponse);
+            }
+            return orderResponses;
         } catch (Exception e) {
             throw e;
         }
     }
 
     @Override
-    public OrderDto getOrderById(int id) {
+    public OrderResponse getOrderById(int id) {
         try {
-            Order Order = OrderRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Order", "id", id));
-            return mapToDTO(Order);
+            Order order = _orderRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Order", "id", id));
+            int index;
+            List<ProductOrder> productOrders = _productOrderRepository.findAll();
+            for (index = 0; index < productOrders.size(); index++)
+                if (productOrders.get(index).getId().getOrder().getId() == id) break;
+
+            OrderResponse orderResponse = new OrderResponse();
+            orderResponse.setOrderId(order.getId());
+            orderResponse.setOrderedAt(order.getOrderedAt());
+            orderResponse.setProductId(productOrders.get(index).getId().getProduct().getId());
+            orderResponse.setCustomer(order.getCustomer().getId());
+            orderResponse.setQuantity(productOrders.get(index).getQuantity());
+            orderResponse.setVat(productOrders.get(index).getVat());
+            orderResponse.setProduct_price(productOrders.get(index).getPrice());
+            return orderResponse;
+
+
         } catch (Exception e) {
             throw e;
         }
     }
 
-    @Override
-    public OrderDto updateOrder(OrderDto OrderDto, int id) {
-        try {
-            // get Order by id from the database
-            Order Order = OrderRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Order", "id", id));
-            Order.setId(Order.getId());
-            Customer customer = new Customer();
-            customer.setId(OrderDto.getCustomerId());
-            Order.setCustomer(customer);
-            Order.setOrderedAt(OrderDto.getOrderedAt());
-            Order updatedOrder = OrderRepository.save(Order);
-            return mapToDTO(updatedOrder);
-        } catch (Exception e) {
-            throw e;
-        }
-    }
+    public boolean cancelOrderById(int id) {
 
-    @Override
-    public void deleteOrderById(int id) {
-        try {
-            // get Order by id from the database
-            Order Order = OrderRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Order", "id", id));
-            OrderRepository.delete(Order);
-        } catch (Exception e) {
-            throw e;
-        }
-    }
 
-    // convert Entity into DTO
-    private OrderDto mapToDTO(Order Order) {
         try {
-            OrderDto OrderDto = mapper.map(Order,OrderDto.class);
-            OrderDto.setCustomerId(Order.getCustomer().getId());
+            Order order = _orderRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Order", "id", id));
 
-            return OrderDto;
-        } catch (Exception e) {
-            throw e;
-        }
-    }
+            // get the product orders with order_id =id
+            List<ProductOrder> productOrders = _productOrderRepository.findAll();
+            for (int index = 0; index < productOrders.size(); index++)
+                if (productOrders.get(index).getId().getOrder().getId() == id) {
 
-    // convert DTO to entity
-    private Order mapToEntity(OrderDto OrderDto) {
-        try {
-            Order Order = mapper.map(OrderDto,Order.class);
-            Customer customer = new Customer();
-            customer.setId(OrderDto.getCustomerId());
-            Order.setCustomer(customer);
-            return Order;
+                    //update stock quantity
+                    StockDto stockDto = _stockService.getStockByProductId(productOrders.get(index).getId().getProduct().getId());
+                    stockDto.setQuantity(stockDto.getQuantity() + productOrders.get(index).getQuantity());
+                    stockDto.setUpdateAt(new Date());
+                    _stockService.updateStock(stockDto, stockDto.getId());
+
+
+                    _productOrderRepository.delete(productOrders.get(index));
+                    _orderRepository.delete(order);
+                }
 
         } catch (Exception e) {
             throw e;
         }
+        return true;
     }
 }

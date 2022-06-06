@@ -30,7 +30,7 @@ public class StockServiceImpl implements StockService {
     public StockDto createStock(StockDto StockDto) throws Exception {
         try {
 
-            if(!ProductService.getProductById(StockDto.getId()).isStockable())
+            if(!ProductService.getProductById(StockDto.getProductId()).isStockable())
                 throw  new Exception("Can not Add product to the stock");
             // convert DTO to entity
             Stock Stock = mapToEntity(StockDto);
