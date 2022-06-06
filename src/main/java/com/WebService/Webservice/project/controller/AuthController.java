@@ -5,6 +5,8 @@ import com.WebService.Webservice.project.dto.Auth.LoginDto;
 import com.WebService.Webservice.project.dto.Auth.SignUpDto;
 import com.WebService.Webservice.project.entity.Auth.Role;
 import com.WebService.Webservice.project.entity.Auth.User;
+import com.WebService.Webservice.project.entity.Order;
+import com.WebService.Webservice.project.exception.ResourceNotFoundException;
 import com.WebService.Webservice.project.repository.Auth.RoleRepository;
 import com.WebService.Webservice.project.repository.Auth.UserRepository;
 import com.WebService.Webservice.project.security.JwtTokenProvider;
@@ -79,6 +81,10 @@ public class AuthController {
         user.setEmail(signUpDto.getEmail());
         user.setPassword(passwordEncoder.encode(signUpDto.getPassword()));
 
+        Role admin= new Role();
+        admin.setName("ROLE_ADMIN");
+        roleRepository.findByName("ROLE_ADMIN").orElse(roleRepository.save(admin));
+
         Role roles = roleRepository.findByName("ROLE_ADMIN").get();
         user.setRoles(Collections.singleton(roles));
 
@@ -109,6 +115,10 @@ public class AuthController {
         user.setUsername(signUpDto.getUsername());
         user.setEmail(signUpDto.getEmail());
         user.setPassword(passwordEncoder.encode(signUpDto.getPassword()));
+
+        Role user_role= new Role();
+        user_role.setName("ROLE_USER");
+        roleRepository.findByName("ROLE_USER").orElse(roleRepository.save(user_role));
 
         Role roles = roleRepository.findByName("ROLE_USER").get();
         user.setRoles(Collections.singleton(roles));

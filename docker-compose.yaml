@@ -6,13 +6,13 @@ services:
     container_name: mysql
     environment:
       - "MYSQL_DATABASE=bzu"
-      - "MYSQL_USER=user"
-      - "MYSQL_PASSWORD=user"
+      - "MYSQL_USER=root"
+      - "MYSQL_PASSWORD=root"
       - "MYSQL_ROOT_PASSWORD=root"
     ports:
       - "127.0.0.1:3307:3306"
     volumes:
-      - C:/M.kharma_data/bzu/WebServices2022/docker/data/mysql:/var/lib/mysql
+      - C:/NazeehRimawi/bzu/WebServices2022/docker/data/mysql:/var/lib/mysql
   app:
     image: 'rest-api:latest'
     container_name: rest-api

@@ -26,7 +26,7 @@ This was a very challenging assignment since it gave me new skills:
 3-How to use Docker.
 ### 2- API Design
 
-For the resources that need authentication, The token key was appended with header as follow :
+For the resources that need authentication,first we make an user/admin accounts and login to get The token key, and it was appended with header as following:
 "Authorization: Bearer TOKEN_VALUE"
 For example
 
@@ -60,14 +60,19 @@ docker build -t rest-api .
 ```
 4- Run docker image and test it with the existing database.
 ```bash
-docker run --name rest-api -p 127.0.0.1:8080:8080 rest-api
+docker run --name rest-api -p 127.0.0.1:9091:9091 rest-api
 ```
 5- Make a standalone app(including the database server ) using docker-compose to start the app and MySQL DB together
 ```bash
 docker-compose up
 docker-compose down  # if the service already up
 ```
-6-Finally the docker image were pulled to the docker hub and this the link:
+6-Finally the docker image were pulled to the docker hub using these commands:
+
+```bash
+docker tag rest-api:latest nazeeh1999/rest-api %The image name should be as repo name in dockerHub
+docker push nazeeh1999/rest-api
+```
 
 ### 5- Documentation
 Swagger Documentation were used at this project and can be accessed using this link: 

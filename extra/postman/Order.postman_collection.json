@@ -1,0 +1,100 @@
+{
+	"info": {
+		"_postman_id": "6d60811f-c502-4629-9e62-3628fa0c0a4d",
+		"name": "Order",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "20593998"
+	},
+	"item": [
+		{
+			"name": "CreateOrder",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"productId\": 6,\r\n  \"quantity\": 5,\r\n  \"updateAt\": \"2022-07-05\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:9091/api/v1/order"
+			},
+			"response": []
+		},
+		{
+			"name": "GetAllOrders",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:9091/api/v1/order"
+			},
+			"response": []
+		},
+		{
+			"name": "GetOrderById",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:9091/api/v1/order/26"
+			},
+			"response": []
+		},
+		{
+			"name": "CancelOrder",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9091/api/v1/order/cancel?OrderId=26",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9091",
+					"path": [
+						"api",
+						"v1",
+						"order",
+						"cancel"
+					],
+					"query": [
+						{
+							"key": "OrderId",
+							"value": "26"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": {
+			"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJuYXplZWhfckB5YWhvby5jb20iLCJpYXQiOjE2NTQ0NjgxOTksImV4cCI6MTY1NTA3Mjk5OX0.zAcB14kRmUFLhuQR8pEKw-7A5wIQHmZwmFjNX6fEgyYHi6PMQagw9u2ss1x-1LOc5yiCV0f8Mkx7FWrQzdt7Dw"
+		}
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
