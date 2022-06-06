@@ -73,7 +73,8 @@ docker-compose down  # if the service already up
 docker tag rest-api:latest nazeeh1999/rest-api %The image name should be as repo name in dockerHub
 docker push nazeeh1999/rest-api
 ```
-
+Link For DockerHub:
+https://hub.docker.com/r/nazeeh1999/rest-api
 ### 5- Documentation
 Swagger Documentation were used at this project and can be accessed using this link: 
 http://localhost:9091/swagger-ui/#/
